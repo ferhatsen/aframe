@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Models (glTF, OBJ, COLLADA)</title>
+    <meta name="description" content="Models (glTF, OBJ, COLLADA) — A-Frame">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.12.3/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+
+
+    <!--
+<script src="https://unpkg.com/aframe-extras.animation-mixer@3.12.3/dist/aframe-extras.animation-mixer.min.js"></script>
+-->
+
+    <script src="https://cdn.rawgit.com/ferhatsen/aframe-orbit-controls-component/master/dist/aframe-orbit-controls-component.js"></script>
+    <script src="https://cdn.rawgit.com/tizzle/aframe-sprite-component/master/dist/aframe-sprite-component.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+
+</head>
+
+<body>
+    <a-scene stats cursor="rayOrigin: mouse" vr-mode-ui="enabled: false" environment="preset: checkerboard">
+
+        <a-assets>
+
+            <!--        <a-asset-item id="tree1" src="../../assets/models/tree1/tree1.dae"></a-asset-item>
+        <a-asset-item id="tree2" src="../../assets/models/tree2/tree2.dae"></a-asset-item>
+        <a-asset-item id="crate-mtl" src="../../assets/models/crate/crate.mtl"></a-asset-item>
+        <a-asset-item id="crate-obj" src="../../assets/models/crate/crate.obj"></a-asset-item>-->
+
+         <a-asset-item id="brainstem" src="https://cdn.aframe.io/test-models/models/glTF-2.0/brainstem/BrainStem.gltf"></a-asset-item>
+        <a-asset-item id="vc" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/VC/glTF-pbrSpecularGlossiness/VC.gltf"></a-asset-item>
+
+            <!--
+        <a-asset-item id="helmet" src="https://raw.githubusercontent.com/KhronosGroup/glTF-WebGL-PBR/master/models/DamagedHelmet/glTF/DamagedHelmet.gltf"></a-asset-item>
+-->
+
+            <img id="hotspotimage" src="hotspot.png">
+
+            <!--
+        <img id="sky" src="peach-gradient.jpg">
+-->
+        </a-assets>
+        <!--
+
+     <a-entity position="0 0 4">
+      	<a-camera>
+        </a-camera>
+      </a-entity>-->
+        <!--
+        <a-entity camera
+          universal-controls>
+        </a-entity>-->
+
+
+        <a-entity id="camera" camera="fov: 50; zoom: 1;" position="0 10 10" 
+            mouse-cursor=""         
+            orbit-controls="
+                autoRotate: false;
+                target: #target;
+                enableDamping: true;
+                dampingFactor: 0.125;
+                rotateSpeed:0.15;
+                minDistance:10;
+                maxDistance:100;
+                minPolarAngle: 0;	                          
+                maxPolarAngle: 1.4;
+                logPosition:false;">
+            <!--
+          <a-entity geometry="primitive:cone; radius-bottom:1; radius-top:0" scale=".33 1 .33" position="0 0 0" rotation="90 0 0" material="color: #0099ff; transparent: true; opacity:0.5"></a-entity>
+-->
+        </a-entity>
+
+
+
+        <a-entity id="target">
+            <a-box id="box" position="-1 0.5 1" rotation="0 45 0" color="#4CC3D9"></a-box>
+            <a-cylinder id="cylinder" position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+            <!--
+          <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+-->
+
+            <a-box position="0 1.5 -2" rotation="30 30 0" color="red" 
+                   event-set__enter="_event: mouseenter; material.color: yellowgreen; scale: 3 1 1" 
+                   event-set__leave="_event: mouseleave; material.color: skyblue; scale: 1 1 1"
+                   event-set__1="_event: click; _target: #eye-1; visible: true"
+                   event-set__2="_event: click; _target: #eye-2; visible: true"                   
+                   >
+                <a-animation attribute="rotation" begin="click" dur="500" fill="backwards" to="30 30 360"></a-animation>
+                <a-sphere id="eye-1" radius="0.05" position="-0.5 0.7 0.5" visible="false"></a-sphere>
+                <a-sphere id="eye-2" radius="0.05" position="0.5 0.7 0.5" visible="false"></a-sphere>                
+            </a-box>
+
+<!--
+            <a-entity gltf-model-next="src: url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/VC/glTF-pbrSpecularGlossiness/VC.gltf);" position="0 0.1 0" scale="1.6 1.6 1.6" animation-mixer="clip: *;"></a-entity>
+-->
+
+           <a-entity id="eye-3" visible="true" >
+                      <a-gltf-model src="#vc" position="0 1.1 0" scale="1 1 1" animation-mixer="clip: *;"></a-gltf-model>
+            </a-entity> 
+
+
+
+
+            
+            <a-sprite position="1 2 1" resize="1 1 1" src="hotspot.png"
+                   event-set__30="_event: click; _target: #eye-3; visible: false"
+                      >
+            </a-sprite>
+
+                        
+            <a-sprite position="3 2 1" resize="1 1 1" src="hotspot.png"
+                   event-set__10="_event: click; _target: #eye-1; visible: true"
+                   event-set__20="_event: click; _target: #eye-2; visible: true"
+                   event-set__30="_event: click; _target: #eye-3; visible: true"
+                      >
+            </a-sprite>
+
+        </a-entity>
+
+
+        <a-sky src="#sky"></a-sky>
+
+        <a-light type="ambient" color="#ccc"></a-light>
+        <a-light color="#ddf" distance="100" intensity="0.4" type="point"></a-light>
+    </a-scene>
+</body>
+</html>
